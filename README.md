@@ -70,5 +70,11 @@ All video content published by JTBS Classic is the copyrighted property of *Jish
 
 For broadcasting services, event coverage, live streaming solutions, advertising, partnerships, or general inquiries, please contact:
 
-*JTBS Classic Channel*
+**JTBS Classic Channel**  
 A Service of Jishu Television's Broadcasting Services (JTBS)
+
+**Proprietor:** Joel Sohan Gomes  
+📞 **Phone:** +91 83738 28015  
+📧 **Email:** helpdesk.jtbs@gmail.com  
+
+© JTBS Classic Channel. All Rights Reserved.
