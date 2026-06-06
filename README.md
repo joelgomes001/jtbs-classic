@@ -1,52 +1,33 @@
 # JTBS Classic
 
-[![Android](https://img.shields.io/badge/Platform-Android-green.svg)](https://developer.android.com)
-[![Firebase](https://img.shields.io/badge/Backend-Firebase-orange.svg)](https://firebase.google.com)
-[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
+**JTBS Classic** is the official live-streaming companion player. Watch our live broadcasts instantly on your web browser or install the lightweight Android app on your phone, tablet, or Android TV.
 
-**JTBS Classic** is a lightweight, real-time live-streaming companion system. It consists of a real-time web portal (for viewing and admin controls) and a dedicated Android application optimized for instant playback.
-
-🌐 **Live Website**: [https://jtbs-classic.web.app](https://jtbs-classic.web.app)
+🌐 **Watch Live on Web**: [https://jtbs-classic.web.app](https://jtbs-classic.web.app)
 
 ---
 
-## 📥 Direct APK Download
+## 📥 Install the Android App
 
-Get the official Android application directly onto your device:
+Get the official **JTBS Classic** app directly on your Android device for the best viewing experience:
 
 ### **[👉 Download JTBS Classic APK 👈](https://github.com/joelgomes001/jtbs-classic/releases/latest/download/JTBS-Classic.apk)**
 
-*Note: After downloading, open the APK file and follow your device's prompts to install (you may need to enable "Install from Unknown Sources" for your browser).*
+#### **How to Install on Android Phone / Tablet:**
+1. Click the download link above.
+2. Open the downloaded file (`JTBS-Classic.apk`).
+3. If prompted, allow your browser to "Install unknown apps" (this is normal for direct app downloads).
+4. Tap **Install** and open the app!
+
+#### **How to Install on Android TV / Smart Box:**
+1. Download the APK file to a USB flash drive.
+2. Plug the USB flash drive into your Android TV or Smart Box.
+3. Use a file manager app on your TV (like *File Commander*) to open the USB drive and click the `JTBS-Classic.apk` file to install it.
 
 ---
 
-## ✨ Features
+## 📺 Why use the Android App?
 
-- ⚡ **Instant Autoplay with Sound**: The stream and audio start playing immediately as soon as the app is opened—no manual touch or interaction required.
-- 📡 **Multi-Source Support**: Plays standard HLS (.m3u8) streams, YouTube Live streams, and Facebook Live streams.
-- 🎛️ **Real-Time Admin Controls**: Toggle stream status, change video sources, update logos, and configure offline pages dynamically. Changes sync to viewers in less than 1 second.
-- ☁️ **Serverless Architecture**: Utilizes Firebase (Authentication, Firestore, Cloud Functions, and Hosting) for high speed, zero-maintenance, and low/zero cost.
-
----
-
-## 🛠️ System Architecture
-
-### 1. Android Viewer App (`.apk`)
-A lightweight, fast, and auto-focused wrapper optimized for fullscreen playback. Designed specifically for smart devices, TVs, and mobile screens to display the live broadcast with zero delay and instant-on audio capabilities.
-
-### 2. Live Web Player (Firebase Hosted)
-A public web interface that pulls live configuration and video states dynamically from Firestore.
-
-### 3. Admin Dashboard
-A secure dashboard for broadcasters to:
-- Turn the live feed on and off.
-- Instantly swap stream links (HLS, YouTube, or Facebook).
-- Customize the offline brand presence, logos, and messages.
-
----
-
-## ⚙️ Backend Tech Stack
-- **Database**: Google Cloud Firestore (Real-time Config & Settings)
-- **Functions**: Node.js Firebase Cloud Functions (Admin Role Management)
-- **Hosting**: Firebase Hosting (Web & Static asset delivery)
-- **Authentication**: Firebase Auth (Admin identity verification)
+- ⚡ **Instant Playback**: Open the app and the stream starts playing immediately.
+- 🔊 **Auto-Sound**: Audio starts playing automatically as soon as the live stream loads.
+- 📱 **Fullscreen Experience**: Designed for distraction-free, full-screen viewing on TVs and mobile devices.
+- 🛡️ **Ad-Free & Lightweight**: No ads, no sign-ins, and virtually zero battery drain.
