@@ -14,7 +14,7 @@
 
 Get the official Android application directly onto your device:
 
-### **[👉 Download JTBS Classic APK 👈](https://github.com/joelgomes001/jtbs-classic/raw/main/assets/JTBS-Classic.apk)**
+### **[👉 Download JTBS Classic APK 👈](https://github.com/joelgomes001/jtbs-classic/releases/latest/download/JTBS-Classic.apk)**
 
 *Note: After downloading, open the APK file and follow your device's prompts to install (you may need to enable "Install from Unknown Sources" for your browser).*
 
