@@ -12,9 +12,7 @@ Watch our live broadcasts directly in your web browser or enjoy a seamless viewi
 
 Get the official *JTBS Classic* app directly on your Android device for the best viewing experience.
 
-### 👉 Download JTBS Classic APK
-
-https://github.com/joelgomes001/jtbs-classic/releases/latest/download/JTBS-Classic.apk
+### **[👉 Download JTBS Classic APK 👈](https://github.com/joelgomes001/jtbs-classic/releases/latest/download/JTBS-Classic.apk)**
 
 ### How to Install on Android Phone / Tablet
 
