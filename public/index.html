@@ -1602,8 +1602,9 @@ document.addEventListener('webkitfullscreenchange', onFullscreenChange);
 document.addEventListener('mozfullscreenchange', onFullscreenChange);
 document.addEventListener('MSFullscreenChange', onFullscreenChange);
 
-if (typeof isPreview !== 'undefined' && isPreview) {
-  if (fsBtn) fsBtn.style.display = 'none';
+const isAndroidApp = (typeof window.Android !== 'undefined') || /wv|AndroidApp|Android/i.test(navigator.userAgent) || (typeof isPreview !== 'undefined' && isPreview);
+if (isAndroidApp && fsBtn) {
+  fsBtn.style.display = 'none';
   const clock = $('clock-wrap');
   if (clock) clock.style.right = '22px';
 }
