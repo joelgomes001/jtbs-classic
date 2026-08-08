@@ -19,7 +19,7 @@
 | Resource | Official Link | Description |
 |----------|---------------|-------------|
 | **Live Web App** | [https://jtbsclassic.dpdns.org](https://jtbsclassic.dpdns.org) | Watch live TV streams directly in any browser |
-| **Android App** | [Download v9.0.2 APK](https://github.com/joelgomes001/jtbs-classic/releases/latest) | Official Android Mobile App |
+| **Android App** | [Download Latest APK](https://github.com/joelgomes001/jtbs-classic/releases/latest) | Official Android Mobile App |
 | **Main Channel Stream** | `https://jtbsclassic.dpdns.org/live.m3u8` | Direct HLS stream URL |
 
 ---
@@ -27,7 +27,6 @@
 ## 📱 Mobile App Features
 
 - **24/7 Live HD Broadcasts** — Smooth continuous playback with minimal buffering.
-- **Multi-Feed Selection** — Access main channel broadcasts and secondary feeds (Feeds 1 to 6).
 - **Auto-Rotation & Fullscreen** — Portrait splash screen with automatic landscape stream player.
 - **Smart Reconnection** — Auto-reconnect on network switches.
 
