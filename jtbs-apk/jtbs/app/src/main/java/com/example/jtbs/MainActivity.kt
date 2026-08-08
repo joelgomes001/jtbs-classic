@@ -125,8 +125,6 @@ class MainActivity : Activity() {
     // ── EXACT MATCHING WHITE SPLASH SCREEN LAYOUT ───────────────────────────
 
     private fun buildExactMatchingSplash(): FrameLayout {
-        val density = resources.displayMetrics.density
-
         val container = FrameLayout(this).apply {
             layoutParams = FrameLayout.LayoutParams(
                 FrameLayout.LayoutParams.MATCH_PARENT,
@@ -134,6 +132,20 @@ class MainActivity : Activity() {
             )
             setBackgroundColor(Color.WHITE)
         }
+
+        val splashResId = resources.getIdentifier("splash", "drawable", packageName)
+        if (splashResId != 0) {
+            val splashImg = ImageView(this).apply {
+                setImageResource(splashResId)
+                scaleType = ImageView.ScaleType.FIT_CENTER
+                layoutParams = FrameLayout.LayoutParams(
+                    FrameLayout.LayoutParams.MATCH_PARENT,
+                    FrameLayout.LayoutParams.MATCH_PARENT
+                )
+            }
+            container.addView(splashImg)
+        } else {
+            val density = resources.displayMetrics.density
 
         val mainLayout = LinearLayout(this).apply {
             layoutParams = FrameLayout.LayoutParams(
@@ -310,6 +322,7 @@ class MainActivity : Activity() {
         mainLayout.addView(bottomSection)
 
         container.addView(mainLayout)
+        }
 
         container.setOnClickListener {
             if (isSplashActive) {

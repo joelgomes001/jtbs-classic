@@ -566,7 +566,7 @@ tr:last-child td{border-bottom:none;}
 <div id="login-page">
   <div class="login-box">
     <div class="login-logo">
-      <img id="login-logo-img" src="/logo.png" alt="JTBS Classic Logo" class="loaded"/>
+      <img id="login-logo-img" src="/logo.png" alt="JTBS Classic Logo" class="loaded" onerror="this.style.display='none'"/>
       <div class="brand" id="login-brand">JTBS Classic</div>
     </div>
     <div class="login-title">Admin Panel</div>
@@ -586,7 +586,7 @@ tr:last-child td{border-bottom:none;}
 <div id="dashboard-page">
   <div class="topbar">
     <div class="topbar-left">
-      <img class="topbar-logo loaded" id="topbar-logo" src="/logo.png" alt="JTBS Logo"/>
+      <img class="topbar-logo loaded" id="topbar-logo" src="/logo.png" alt="JTBS Logo" onerror="this.style.display='none'"/>
       <span class="topbar-title" id="topbar-title">JTBS Classic Admin</span>
     </div>
     <div class="topbar-right" style="display:flex; align-items:center; gap:12px;">
@@ -649,9 +649,14 @@ tr:last-child td{border-bottom:none;}
           
           <div id="offline-fields" class="offline-fields" style="margin-top:20px;">
             <div class="field" style="margin-top:18px;">
-              <label>Offline Image URL</label>
+              <label>Public / Web Offline Image URL</label>
               <input type="url" id="offline-image-url" placeholder="https://i.postimg.cc/gkDpS0vy/originalcolorbars720.jpg"/>
-              <div class="hint">Direct image link (PNG/JPG/WebP) shown on Web App, Website & Decoder App when off air.</div>
+              <div class="hint">Direct image link (PNG/JPG/WebP) shown on Web App & Website when off air.</div>
+            </div>
+            <div class="field" style="margin-top:14px; background: rgba(255, 191, 0, 0.05); border: 1px solid rgba(255, 191, 0, 0.4); border-radius: 8px; padding: 12px 14px;">
+              <label style="color: var(--gold); font-weight:700; font-size:13px; text-transform:uppercase; letter-spacing:0.5px;">Decoder Offline Image URL (Decoder / Box Only)</label>
+              <input type="url" id="decoder-offline-image-url-same" placeholder="https://i.postimg.cc/gkDpS0vy/originalcolorbars720.jpg"/>
+              <div class="hint" style="color: rgba(235, 245, 255, 0.85);">Direct image link (PNG/JPG/WebP) pulled and displayed ONLY by TV Decoder Boxes when off air.</div>
             </div>
             <div class="field">
               <label>Offline HLS / TS Stream URL (.m3u8 / .ts / .mp4)</label>
@@ -1001,7 +1006,6 @@ tr:last-child td{border-bottom:none;}
       <div class="field"><label>Channel name</label><input type="text" id="brand-name" placeholder="JTBS Classic"/></div>
       <div class="field"><label>Logo URL (transparent PNG)</label><input type="url" id="brand-logo-url" placeholder="https://i.postimg.cc/…/logo.png"/><div class="hint">Upload to imgbb.com → copy Direct link</div><img id="brand-logo-preview" style="max-width: 100px; max-height: 100px; object-fit: contain; margin-top: 8px; display: none; border: 1px dashed var(--border); border-radius: 6px; padding: 4px;" /></div>
       <div class="field"><label>Offline Image URL</label><input type="url" id="brand-offline-video" placeholder="https://i.postimg.cc/user/slate.png"/></div>
-      <div class="field"><label>Offline Video Duration (seconds)</label><input type="number" id="brand-offline-duration" placeholder="28" min="1" step="1" style="width: 120px;"/></div>
       <div class="field"><label>Offline message</label><input type="text" id="brand-offline-text" placeholder="We'll be back soon…"/></div>
       <div class="field" style="margin-top: 15px; display: flex; align-items: center; gap: 10px;">
         <input type="checkbox" id="brand-show-offair-logo" style="width: auto; cursor: pointer;"/>
@@ -1370,7 +1374,6 @@ function loadBranding(){
     $('brand-name').value=c.channelName||'';
     $('brand-logo-url').value=c.logoUrl||'';
     if ($('brand-offline-video')) $('brand-offline-video').value = c.offlineVideoUrl || c.offlineImageUrl || '';
-    if ($('brand-offline-duration')) $('brand-offline-duration').value = c.offlineVideoDuration || '';
     $('brand-offline-text').value = c.offlineText || '';
     $('brand-show-offair-logo').checked = !!c.showLogoOffAir;
     $('brand-watermark-text').value = c.watermarkText !== undefined ? c.watermarkText : c.channelName || '';
@@ -1393,6 +1396,7 @@ function loadBranding(){
     document.title = (c.channelName || 'JTBS Classic') + ' — Admin';
     if (c.logoUrl) { const i = $('topbar-logo'); i.src = c.logoUrl; i.onload = () => i.classList.add('loaded'); }
     if ($('offline-image-url') && $('offline-image-url').value === '') $('offline-image-url').value = c.offlineImageUrl || c.offlineVideoUrl || '';
+    if ($('decoder-offline-image-url-same') && document.activeElement !== $('decoder-offline-image-url-same')) $('decoder-offline-image-url-same').value = c.decoderOfflineImageUrl || '';
     if ($('offline-hls-url') && $('offline-hls-url').value === '') $('offline-hls-url').value = c.offlineHlsUrl || '';
     if ($('offline-text-input') && $('offline-text-input').value === '') $('offline-text-input').value = c.offlineText || '';
     
@@ -1415,7 +1419,6 @@ $('save-branding-btn').addEventListener('click',async()=>{
       channelName: $('brand-name').value.trim() || 'JTBS Classic',
       logoUrl: $('brand-logo-url').value.trim() || '',
       offlineVideoUrl: $('brand-offline-video').value.trim() || '',
-      offlineVideoDuration: parseInt($('brand-offline-duration').value, 10) || 28,
       offlineText: $('brand-offline-text').value.trim() || '',
       showLogoOffAir:$('brand-show-offair-logo').checked,
       watermarkText:$('brand-watermark-text').value.trim(),
@@ -1499,7 +1502,7 @@ function loadStreamState(){
           } catch(e){}
           if (!updatedAtMs) return;
           const elapsed = Math.max(0, (Date.now() - updatedAtMs) / 1000);
-          if (elapsed >= d.duration) {
+          if (d.duration > 0 && elapsed >= d.duration) {
             console.log("Public stream duration completed. Setting to offline.");
             db.doc('streamState/main').set({
               isLive: false,
@@ -1584,7 +1587,7 @@ function updateStreamUI(live,url){
   s.className=live?'status-live':'status-off';
   $('live-fields').style.display=live?'block':'none';
   $('offline-fields').style.display=live?'none':'block';
-  if(live) $('stream-url-input').value=url;
+  if(live && document.activeElement !== $('stream-url-input')) $('stream-url-input').value=url;
 }
 
 function updatePublicUI(live,url){
@@ -1593,7 +1596,7 @@ function updatePublicUI(live,url){
   s.className=live?'status-live':'status-off';
   $('public-live-fields').style.display=live?'block':'none';
   $('public-offline-fields').style.display=live?'none':'block';
-  if(live) $('public-url-input').value=url;
+  if(live && document.activeElement !== $('public-url-input')) $('public-url-input').value=url;
 }
 
 function updateDecoderUI(live,url){
@@ -1602,7 +1605,7 @@ function updateDecoderUI(live,url){
   s.className=live?'status-live':'status-off';
   $('decoder-live-fields').style.display=live?'block':'none';
   $('decoder-offline-fields').style.display=live?'none':'block';
-  if(live) $('decoder-url-input').value=url;
+  if(live && document.activeElement !== $('decoder-url-input')) $('decoder-url-input').value=url;
 }
 
 $('stream-toggle').addEventListener('change',async function(){
@@ -2225,7 +2228,15 @@ function updateAdminTimers() {
 
 setInterval(updateAdminTimers, 1000);
 
+function syncWorkerState(doc, url, isLive = true) {
+  try {
+    fetch(`https://jtbsclassic.dpdns.org/updateStreamState?doc=${encodeURIComponent(doc)}&url=${encodeURIComponent(url)}&isLive=${isLive}`).catch(()=>{});
+  } catch(e){}
+}
+
 function saveStreamState(url, duration) {
+  syncWorkerState('main', url, true);
+  syncWorkerState('feed1', url, true);
   const isYT = detectType(url) === 'youtube';
   const isYTLive = isYT && (isLiveStreamUrl(url) || window.currentVideoIsLive === true);
   const playModeEl = document.querySelector('input[name="yt-play-mode"]:checked');
@@ -2279,22 +2290,6 @@ function saveStreamState(url, duration) {
   });
 }
 
-$('go-live-btn').addEventListener('click',async()=>{
-  const url=$('stream-url-input').value.trim();
-  if(!url){alert('Enter a stream URL.');return;}
-  $('go-live-btn').disabled=true;
-  window.currentVideoIsLive = false;
-
-  $('live-save-msg').textContent = 'Detecting stream duration...';
-  $('live-save-msg').style.display = 'block';
-  $('live-save-msg').classList.remove('err');
-
-  fetchMediaDuration(url).then(res => {
-    window.currentVideoIsLive = res.isLive;
-    saveStreamState(url, res.duration);
-  });
-});
-
 function savePublicStreamState(url, duration) {
   const isYT = detectType(url) === 'youtube';
   const isYTLive = isYT && (isLiveStreamUrl(url) || window.currentPublicVideoIsLive === true);
@@ -2319,11 +2314,11 @@ function savePublicStreamState(url, duration) {
 
   const playlistId = extractYTPlaylistId(url);
   const selectorCard = $('public-playlist-selector-card');
-  if (playlistId && selectorCard && selectorCard.style.display !== 'none' && playlists.public.videos.length > 0) {
+  if (playlistId && selectorCard && selectorCard.style.display !== 'none' && playlists.public && playlists.public.videos.length > 0) {
     const selected = playlists.public.videos.filter(v => v.selected);
     if (selected.length === 0) {
       alert("Please select at least one video to go live.");
-      $('public-go-live-btn').disabled = false;
+      if ($('public-go-live-btn')) $('public-go-live-btn').disabled = false;
       return;
     }
     data.selectedVideos = selected.map(v => v.id);
@@ -2339,17 +2334,22 @@ function savePublicStreamState(url, duration) {
   }
 
   db.doc('streamState/main').set(data, {merge:true}).then(() => {
-    $('public-live-save-msg').textContent = '✓ Public stream is live';
-    flash('public-live-save-msg', false);
+    if ($('public-live-save-msg')) {
+      $('public-live-save-msg').textContent = '✓ Public stream is live';
+      flash('public-live-save-msg', false);
+    }
   }).catch(e => {
-    $('public-live-save-msg').textContent = '✗ ' + e.message;
-    flash('public-live-save-msg', true);
+    if ($('public-live-save-msg')) {
+      $('public-live-save-msg').textContent = '✗ ' + e.message;
+      flash('public-live-save-msg', true);
+    }
   }).finally(() => {
-    $('public-go-live-btn').disabled = false;
+    if ($('public-go-live-btn')) $('public-go-live-btn').disabled = false;
   });
 }
 
 function saveDecoderStreamState(url, duration) {
+  syncWorkerState('decoder', url, true);
   const isYT = detectType(url) === 'youtube';
   const isYTLive = isYT && (isLiveStreamUrl(url) || window.currentDecoderVideoIsLive === true);
   const playModeEl = document.querySelector('input[name="decoder-yt-play-mode"]:checked');
@@ -2373,11 +2373,11 @@ function saveDecoderStreamState(url, duration) {
 
   const playlistId = extractYTPlaylistId(url);
   const selectorCard = $('decoder-playlist-selector-card');
-  if (playlistId && selectorCard && selectorCard.style.display !== 'none' && playlists.decoder.videos.length > 0) {
+  if (playlistId && selectorCard && selectorCard.style.display !== 'none' && playlists.decoder && playlists.decoder.videos.length > 0) {
     const selected = playlists.decoder.videos.filter(v => v.selected);
     if (selected.length === 0) {
       alert("Please select at least one video to go live.");
-      $('decoder-go-live-btn').disabled = false;
+      if ($('decoder-go-live-btn')) $('decoder-go-live-btn').disabled = false;
       return;
     }
     data.decoderSelectedVideos = selected.map(v => v.id);
@@ -2393,56 +2393,59 @@ function saveDecoderStreamState(url, duration) {
   }
 
   db.doc('streamState/main').set(data, {merge:true}).then(() => {
-    $('decoder-live-save-msg').textContent = '✓ Decoder stream is live';
-    flash('decoder-live-save-msg', false);
+    if ($('decoder-live-save-msg')) {
+      $('decoder-live-save-msg').textContent = '✓ Decoder stream is live';
+      flash('decoder-live-save-msg', false);
+    }
   }).catch(e => {
-    $('decoder-live-save-msg').textContent = '✗ ' + e.message;
-    flash('decoder-live-save-msg', true);
+    if ($('decoder-live-save-msg')) {
+      $('decoder-live-save-msg').textContent = '✗ ' + e.message;
+      flash('decoder-live-save-msg', true);
+    }
   }).finally(() => {
-    $('decoder-go-live-btn').disabled = false;
+    if ($('decoder-go-live-btn')) $('decoder-go-live-btn').disabled = false;
   });
 }
+
+$('go-live-btn').addEventListener('click', async () => {
+  const url = $('stream-url-input').value.trim();
+  if (!url) { alert('Enter a stream URL.'); return; }
+  $('go-live-btn').disabled = true;
+  saveStreamState(url, 0);
+});
 
 $('public-go-live-btn').addEventListener('click', async () => {
   const url = $('public-url-input').value.trim();
   if (!url) { alert('Enter a stream URL.'); return; }
   $('public-go-live-btn').disabled = true;
-  window.currentPublicVideoIsLive = false;
-
-  $('public-live-save-msg').textContent = 'Detecting stream duration...';
-  $('public-live-save-msg').style.display = 'block';
-  $('public-live-save-msg').classList.remove('err');
-
-  fetchMediaDuration(url).then(res => {
-    window.currentPublicVideoIsLive = res.isLive;
-    savePublicStreamState(url, res.duration);
-  });
+  savePublicStreamState(url, 0);
 });
 
 $('decoder-go-live-btn').addEventListener('click', async () => {
   const url = $('decoder-url-input').value.trim();
   if (!url) { alert('Enter a stream URL.'); return; }
   $('decoder-go-live-btn').disabled = true;
-  window.currentDecoderVideoIsLive = false;
-
-  $('decoder-live-save-msg').textContent = 'Detecting stream duration...';
-  $('decoder-live-save-msg').style.display = 'block';
-  $('decoder-live-save-msg').classList.remove('err');
-
-  fetchMediaDuration(url).then(res => {
-    window.currentDecoderVideoIsLive = res.isLive;
-    saveDecoderStreamState(url, res.duration);
-  });
+  saveDecoderStreamState(url, 0);
 });
 
 $('save-offline-btn').addEventListener('click', async () => {
   $('save-offline-btn').disabled = true;
   try {
     const offImg = $('offline-image-url').value.trim() || '';
+    const decOffImg = $('decoder-offline-image-url-same') ? $('decoder-offline-image-url-same').value.trim() : '';
     const offHls = $('offline-hls-url').value.trim() || '';
     const offTxt = $('offline-text-input').value.trim() || '';
-    await db.doc('config/main').set({ offlineImageUrl: offImg, offlineHlsUrl: offHls, offlineVideoUrl: offHls || offImg, offlineText: offTxt }, { merge: true });
-    await db.doc('streamState/main').set({ offlineImageUrl: offImg, offlineHlsUrl: offHls, offlineVideoUrl: offHls || offImg, offlineText: offTxt }, { merge: true });
+    
+    const payload = { 
+      offlineImageUrl: offImg, 
+      decoderOfflineImageUrl: decOffImg || offImg, 
+      offlineHlsUrl: offHls, 
+      offlineVideoUrl: offHls || offImg, 
+      offlineText: offTxt 
+    };
+
+    await db.doc('config/main').set(payload, { merge: true });
+    await db.doc('streamState/main').set(payload, { merge: true });
     flash('offline-save-msg', false);
   } catch (e) { $('offline-save-msg').textContent = '✗ ' + e.message; flash('offline-save-msg', true); }
   finally { $('save-offline-btn').disabled = false; }
@@ -2995,13 +2998,21 @@ function loadDecoders() {
         if (!isEnabled) {
           srcUptimeEl.textContent = 'idle';
         } else if (d.sourceUptimeSeconds !== undefined && d.sourceUptimeSeconds !== null) {
-          let currentSource = parseInt(d.sourceUptimeSeconds);
-          if (status !== 'offline') {
-            currentSource += elapsedSec;
+          let val = parseInt(d.sourceUptimeSeconds);
+          if (isNaN(val) || val <= 0) {
+            srcUptimeEl.textContent = status === 'offline' ? '0d:00:00:00 (Offline)' : '0d:00:00:00';
+          } else {
+            let currentSource = val;
+            if (currentSource > 1000000000) {
+              currentSource = Math.max(0, Math.floor((now / 1000) - currentSource));
+            }
+            if (status !== 'offline') {
+              currentSource += elapsedSec;
+            }
+            let displayStr = formatUptimeStr(currentSource);
+            if (status === 'offline') displayStr += ' (Offline)';
+            srcUptimeEl.textContent = displayStr;
           }
-          let displayStr = formatUptimeStr(currentSource);
-          if (status === 'offline') displayStr += ' (Offline)';
-          srcUptimeEl.textContent = displayStr;
         } else {
           srcUptimeEl.textContent = 'Unknown';
         }

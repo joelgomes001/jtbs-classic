@@ -2,7 +2,7 @@
   "hosting": {
     "site": "jtbs-classic",
     "public": "public",
-    "ignore": ["firebase.json", "**/.*", "**/node_modules/**"],
+    "ignore": ["firebase.json", "**/.*", "**/node_modules/**", "**/*.apk"],
     "rewrites": [
       { "source": "/admin",    "destination": "/admin.html" },
       { "source": "/admin/**", "destination": "/admin.html" }
