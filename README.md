@@ -20,7 +20,7 @@
 | Resource | Official Link | Description |
 |----------|---------------|-------------|
 | **Live Web App** | [https://jtbsclassic.dpdns.org](https://jtbsclassic.dpdns.org) | Watch live TV streams directly in any browser |
-| **Android App** | [Download v9.0.2 APK](https://github.com/joelgomes001/jtbs-classic/releases/latest) | Official Android Mobile App |
+| **Android App** | [Download Latest APK](https://github.com/joelgomes001/jtbs-classic/releases/latest) | Official Android Mobile App |
 | **IPTV M3U Playlist** | `https://jtbsclassic.dpdns.org/playlist.m3u` | For IPTV players (VLC, TiviMate, Smart TV) |
 | **Main Channel Stream** | `https://jtbsclassic.dpdns.org/live.m3u8` | Direct HLS stream URL |
 | **Channel Logo** | `https://jtbsclassic.dpdns.org/logo.png` | Official high-resolution transparent PNG logo |
