@@ -5,8 +5,7 @@
   <p>Official 24/7 Live Television Broadcasting Service, Web Player & Mobile Application</p>
 
   <a href="https://jtbsclassic.dpdns.org"><strong>🌐 Watch Live Web Player</strong></a> • 
-  <a href="https://github.com/joelgomes001/jtbs-classic/releases/latest"><strong>📱 Download Android App (v9.0.2)</strong></a> • 
-  <a href="https://jtbsclassic.dpdns.org/playlist.m3u"><strong>📺 IPTV Playlist (.m3u)</strong></a>
+  <a href="https://github.com/joelgomes001/jtbs-classic/releases/latest"><strong>📱 Download Android App (v9.0.2)</strong></a>
 </div>
 
 ---
